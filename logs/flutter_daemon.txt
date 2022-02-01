@@ -1,0 +1,33 @@
+!! PLEASE REVIEW THIS LOG FOR SENSITIVE INFORMATION BEFORE SHARING !!
+
+Dart Code extension: 3.28.0
+Flutter extension: 3.28.0 (activated)
+
+App: Visual Studio Code
+Version: 1.61.0
+Platform: win
+
+HTTP_PROXY: undefined
+NO_PROXY: undefined
+
+Logging Categories:
+    FlutterDaemon
+
+Sun Nov 21 2021 [18:25:01 GMT-0500 (Eastern Standard Time)] Log file started
+[6:25:01 PM] [FlutterDaemon] [Info] Spawning C:\Users\hunte\Documents\flutter\bin\flutter.bat with args ["daemon"]
+[6:25:01 PM] [FlutterDaemon] [Info] ..  in C:\Users\hunte\Documents\flutter
+[6:25:01 PM] [FlutterDaemon] [Info] ..  with {"toolEnv":{"FLUTTER_HOST":"VSCode","PUB_ENVIRONMENT":"vscode.dart-code"}}
+[6:25:01 PM] [FlutterDaemon] [Info]     PID: 2288
+[6:25:01 PM] [FlutterDaemon] [Info] ==> [{"id":"1","method":"emulator.getEmulators"}]
+[6:25:03 PM] [FlutterDaemon] [Info] <== [{"event":"daemon.connected","params":{"version":"0.6.1","pid":8548}}]
+[6:25:03 PM] [FlutterDaemon] [Info] ==> [{"id":"2","method":"device.enable"}]
+[6:25:03 PM] [FlutterDaemon] [Info] <== [{"event":"daemon.logMessage","params":{"level":"status","message":"Starting device daemon..."}}]
+[6:25:03 PM] [FlutterDaemon] [Info] <== [{"id":"2"}]
+[6:25:03 PM] [FlutterDaemon] [Info] <== [{"id":"1","result":[{"id":"flutter_emulator","name":"flutter emulator","category":"mobile","platformType":"android"}]}]
+[6:25:07 PM] [FlutterDaemon] [Info] <== [{"event":"device.added","params":{"id":"chrome","name":"Chrome","platform":"web-javascript","emulator":false,"category":"web","platformType":"web","ephemeral":false,"emulatorId":null}}]
+[6:25:07 PM] [FlutterDaemon] [Info] <== [{"event":"device.added","params":{"id":"edge","name":"Edge","platform":"web-javascript","emulator":false,"category":"web","platformType":"web","ephemeral":false,"emulatorId":null}}]
+[6:25:07 PM] [FlutterDaemon] [Info] ==> [{"id":"3","method":"daemon.getSupportedPlatforms","params":{"projectRoot":"C:\\Users\\hunte\\Documents\\StreetDesignerApp\\street_designer"}}]
+[6:25:07 PM] [FlutterDaemon] [Info] <== [{"id":"3","result":{"platforms":["ios","android","web"]}}]
+[6:25:43 PM] [FlutterDaemon] [Info] ==> [{"id":"4","method":"daemon.shutdown"}]
+[6:25:43 PM] [FlutterDaemon] [Info] <== [{"id":"4"}]
+Sun Nov 21 2021 [18:25:43 GMT-0500 (Eastern Standard Time)] Log file ended
