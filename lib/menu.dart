@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:street_designer/get_scenario_options.dart';
 import 'package:street_designer/scenario.dart';
 import 'package:tuple/tuple.dart';
 import 'choice_manager.dart';
@@ -221,11 +222,8 @@ class ScenarioCard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Scenario(
-                                      title: ' ',
+                                      title: ScenarioTitles.cityStreet,
                                       staticOptions: staticOptions,
-                                      // laneOptions: laneTypeManagers,
-                                      // laneOptionsList:
-                                      //     getLaneOptionsList(laneTypeManagers),
                                     )));
                       },
                       child: const Icon(Icons.arrow_forward_ios_rounded,

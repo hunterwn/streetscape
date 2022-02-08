@@ -5,6 +5,7 @@ import 'widgets/popup.dart';
 import 'choice_manager.dart';
 import 'scenario/widgets/lane_buttons.dart';
 import 'scenario/widgets/expandablelistview.dart';
+import 'get_scenario_options.dart';
 
 List laneOptionsList = getLaneOptionsList();
 
@@ -13,8 +14,11 @@ class Scenario extends StatefulWidget {
 
   final List<Option> staticOptions;
 
-  const Scenario({Key? key, required this.title, required this.staticOptions})
-      : super(key: key);
+  const Scenario({
+    Key? key,
+    required this.title,
+    required this.staticOptions,
+  }) : super(key: key);
 
   @override
   _ScenarioState createState() => _ScenarioState();
@@ -25,6 +29,7 @@ class _ScenarioState extends State<Scenario> {
   final playerInfo = PlayerInfo();
   @override
   Widget build(BuildContext context) {
+    currentScenario = widget.title;
     return Stack(children: [
       Scaffold(
           appBar: buildAppBar(context: context),
@@ -166,7 +171,7 @@ void onBuildFinish(Scenario scenario) {
   ImageLayerManager imageLayerManager = ImageLayerManager();
 
   //enable default options
-  laneTypeManagers.forEach((key, laneTypeManager) {
+  getScenarioOptions(scenario.title).forEach((key, laneTypeManager) {
     for (ChoiceManager choiceManager in laneTypeManager.laneTypes!) {
       if (choiceManager.defaultEnabled) {
         for (int i = 0; i < choiceManager.features!.length; i++) {
@@ -219,7 +224,7 @@ class _CategoriesViewState extends State<CategoriesView> {
 List<dynamic> getLaneOptionsList() {
   List<List<ChoiceManager>> managers = [];
 
-  laneTypeManagers.forEach((key, laneTypeManager) {
+  getScenarioOptions(ScenarioTitles.cityStreet).forEach((key, laneTypeManager) {
     managers.add(laneTypeManager.laneTypes!);
   });
 
