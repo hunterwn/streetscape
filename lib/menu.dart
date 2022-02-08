@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:street_designer/scenario.dart';
 import 'package:tuple/tuple.dart';
-
+import 'choice_manager.dart';
 import 'package:street_designer/scenario/Model/loading_handler.dart';
-import 'scenario/scenario.dart';
-import 'scenario/voting.dart';
-import 'profile_page.dart';
+
+//TODO
+List<Option> staticOptions = [
+  Option([
+    [OptionImage(layer: 0, imagePath: 'assets/sky_default.png')]
+  ], null, 0),
+  Option([
+    [OptionImage(layer: 1, imagePath: 'assets/road.png')]
+  ], null, 0),
+  Option([
+    [OptionImage(layer: 2, imagePath: 'assets/crosswalk_far_default.png')]
+  ], null, 0),
+  Option([
+    [OptionImage(layer: 3, imagePath: 'assets/sidewalk_default.png')]
+  ], null, 0),
+  Option([
+    [OptionImage(layer: 5, imagePath: 'assets/fog.png')]
+  ], null, 0),
+  Option([
+    [OptionImage(layer: 6, imagePath: 'assets/traffic_signal.png')]
+  ], null, 0),
+];
+
+//
 
 List<Tuple3> scenarioText = [
   const Tuple3('City Street', 'Create a design for a bustling city street.',
@@ -198,7 +220,13 @@ class ScenarioCard extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ScenarioWidget()));
+                                builder: (context) => Scenario(
+                                      title: ' ',
+                                      staticOptions: staticOptions,
+                                      // laneOptions: laneTypeManagers,
+                                      // laneOptionsList:
+                                      //     getLaneOptionsList(laneTypeManagers),
+                                    )));
                       },
                       child: const Icon(Icons.arrow_forward_ios_rounded,
                           color: Colors.white),
