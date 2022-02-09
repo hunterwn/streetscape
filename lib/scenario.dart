@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'colorscheme.dart';
-import 'scenario/model/loading_handler.dart';
+import 'loading_handler.dart';
 import 'widgets/popup.dart';
 import 'choice_manager.dart';
 import 'scenario/widgets/lane_buttons.dart';
@@ -49,9 +49,8 @@ class _ScenarioState extends State<Scenario> {
     return Stack(children: [
       Scaffold(
           appBar: buildAppBar(context: context),
-          body: buildScenarioBody(context: context, maxDimension: 650))
-
-      // LoadingScreen()
+          body: buildScenarioBody(context: context, maxDimension: 650)),
+      const LoadingScreen()
     ]);
   }
 
