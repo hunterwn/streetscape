@@ -699,6 +699,18 @@ void setLockedByCost(int minCost) {
   return;
 }
 
+void unlockAllOptions() {
+  getScenarioOptions(currentScenario!).forEach((laneName, laneManager) {
+    for (ChoiceManager choiceManager in laneManager.laneTypes!) {
+      for (Feature feature in choiceManager.features!) {
+        for (Option option in feature.options!) {
+          option.setLocked(false);
+        }
+      }
+    }
+  });
+}
+
 class Sidewalk {
   static void onEnableL() {
     Option crosswalk = getScenarioOptions(currentScenario!)["Crosswalk"]!

@@ -66,6 +66,7 @@ class _ScenarioState extends State<Scenario> {
           getScenarioOptions(currentScenario!).forEach((laneName, laneManager) {
             laneManager.forceDisable();
           });
+          unlockAllOptions();
           imageLayerManager.updateAll();
           loadingHandler.loading = true;
           Navigator.pop(context);
