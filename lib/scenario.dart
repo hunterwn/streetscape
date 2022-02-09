@@ -7,17 +7,22 @@ import 'scenario/widgets/lane_buttons.dart';
 import 'scenario/widgets/expandablelistview.dart';
 import 'get_scenario_options.dart';
 
-List laneOptionsList = getLaneOptionsList();
+class ScenarioDescription {
+  final String title;
+  final String description;
+  final String previewImagePath;
+
+  ScenarioDescription(
+      {required this.title,
+      required this.description,
+      required this.previewImagePath});
+}
 
 class Scenario extends StatefulWidget {
   final String title;
-
-  final List<Option> staticOptions;
-
   const Scenario({
     Key? key,
     required this.title,
-    required this.staticOptions,
   }) : super(key: key);
 
   @override
@@ -27,8 +32,19 @@ class Scenario extends StatefulWidget {
 class _ScenarioState extends State<Scenario> {
   final loadingHandler = LoadingHandler();
   final playerInfo = PlayerInfo();
+  List? laneOptionsList;
   @override
   Widget build(BuildContext context) {
+    LoadingHandler loadingHandler = LoadingHandler();
+
+    //If scenario is loading, add a callback to run after loading is finished
+    if (loadingHandler.loading) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        onBuildFinish(widget);
+        //Tell LoadingHandler that loading is finished
+        loadingHandler.finishLoading();
+      });
+    }
     currentScenario = widget.title;
     return Stack(children: [
       Scaffold(
@@ -45,6 +61,13 @@ class _ScenarioState extends State<Scenario> {
       backgroundColor: MyColorScheme.appbarBackground,
       leading: IconButton(
         onPressed: () {
+          ImageLayerManager imageLayerManager = ImageLayerManager();
+          LoadingHandler loadingHandler = LoadingHandler();
+          getScenarioOptions(currentScenario!).forEach((laneName, laneManager) {
+            laneManager.forceDisable();
+          });
+          imageLayerManager.updateAll();
+          loadingHandler.loading = true;
           Navigator.pop(context);
         },
         icon: const Icon(Icons.arrow_back_ios_rounded,
@@ -161,7 +184,12 @@ class _ScenarioState extends State<Scenario> {
 
 class CategoriesView extends StatefulWidget {
   final Scenario scenario;
-  const CategoriesView({Key? key, required this.scenario}) : super(key: key);
+  // final List laneOptionsList;
+  const CategoriesView({
+    Key? key,
+    required this.scenario,
+    // required this.laneOptionsList
+  }) : super(key: key);
 
   @override
   _CategoriesViewState createState() => _CategoriesViewState();
@@ -181,12 +209,14 @@ void onBuildFinish(Scenario scenario) {
     }
   });
 
+  List<Option> staticOptions = getStaticOptions(scenario.title);
+
   //enable static options
-  for (Option option in scenario.staticOptions) {
+  for (Option option in staticOptions) {
     option.enable();
   }
 
-  imageLayerManager.add(scenario.staticOptions);
+  imageLayerManager.add(staticOptions);
 
   imageLayerManager.updateAll();
 }
@@ -198,16 +228,6 @@ class _CategoriesViewState extends State<CategoriesView> {
 
   @override
   Widget build(BuildContext context) {
-    LoadingHandler loadingHandler = LoadingHandler();
-
-    //If scenario is loading, add a callback to run after loading is finished
-    if (loadingHandler.loading) {
-      WidgetsBinding.instance!.addPostFrameCallback((_) {
-        onBuildFinish(widget.scenario);
-        //Tell LoadingHandler that loading is finished
-        loadingHandler.finishLoading();
-      });
-    }
     laneSelectionManager.addListener(() {
       if (mounted) {
         setState(() {
@@ -216,15 +236,17 @@ class _CategoriesViewState extends State<CategoriesView> {
       }
     });
     return ListView(
-      children: (selected != null) ? laneOptionsList.elementAt(selected!) : [],
+      children: (selected != null)
+          ? getLaneOptionsList(currentScenario!).elementAt(selected!)
+          : [],
     );
   }
 }
 
-List<dynamic> getLaneOptionsList() {
+List<dynamic> getLaneOptionsList(String title) {
   List<List<ChoiceManager>> managers = [];
 
-  getScenarioOptions(ScenarioTitles.cityStreet).forEach((key, laneTypeManager) {
+  getScenarioOptions(title).forEach((key, laneTypeManager) {
     managers.add(laneTypeManager.laneTypes!);
   });
 
@@ -260,17 +282,17 @@ class BuildingSelector extends StatelessWidget {
 
   final laneSelectionManager = LaneSelectionManager();
 
-  void selectBuildings() {
-    //select last entry in laneOptionsList (should always be the building options)
-    laneSelectionManager.setSelection(laneOptionsList.length - 1);
+  void selectBuildings(int laneOptionsLength) {
+    laneSelectionManager.setSelection(laneOptionsLength - 1);
   }
 
-  void selectCrosswalk() {
-    laneSelectionManager.setSelection(laneOptionsList.length - 2);
+  void selectCrosswalk(int laneOptionsLength) {
+    laneSelectionManager.setSelection(laneOptionsLength - 2);
   }
 
   @override
   Widget build(BuildContext context) {
+    int laneOptionsLength = getScenarioOptions(currentScenario!).length;
     return Column(
       children: [
         Expanded(flex: 4, child: Container()),
@@ -281,20 +303,20 @@ class BuildingSelector extends StatelessWidget {
                 Expanded(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: selectBuildings,
+                      onTap: () => selectBuildings(laneOptionsLength),
                     )),
                 Expanded(flex: 1, child: Container()),
                 Expanded(
                     flex: 2,
                     child: GestureDetector(
-                      onTap: selectBuildings,
+                      onTap: () => selectBuildings(laneOptionsLength),
                     )),
               ],
             )),
         Expanded(
             flex: 3,
             child: GestureDetector(
-              onTap: selectCrosswalk,
+              onTap: () => selectCrosswalk(laneOptionsLength),
             )),
       ],
     );

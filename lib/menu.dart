@@ -2,43 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:street_designer/get_scenario_options.dart';
 import 'package:street_designer/scenario.dart';
-import 'package:tuple/tuple.dart';
 import 'choice_manager.dart';
 import 'package:street_designer/scenario/Model/loading_handler.dart';
+import 'get_scenario_options.dart';
 
-//TODO
-List<Option> staticOptions = [
-  Option([
-    [OptionImage(layer: 0, imagePath: 'assets/sky_default.png')]
-  ], null, 0),
-  Option([
-    [OptionImage(layer: 1, imagePath: 'assets/road.png')]
-  ], null, 0),
-  Option([
-    [OptionImage(layer: 2, imagePath: 'assets/crosswalk_far_default.png')]
-  ], null, 0),
-  Option([
-    [OptionImage(layer: 3, imagePath: 'assets/sidewalk_default.png')]
-  ], null, 0),
-  Option([
-    [OptionImage(layer: 5, imagePath: 'assets/fog.png')]
-  ], null, 0),
-  Option([
-    [OptionImage(layer: 6, imagePath: 'assets/traffic_signal.png')]
-  ], null, 0),
-];
-
-//
-
-List<Tuple3> scenarioText = [
-  const Tuple3('City Street', 'Create a design for a bustling city street.',
-      'assets/examplescene1.jpg'),
-  const Tuple3('Suburban Street', 'Design the perfect suburban street.',
-      'assets/examplescene2.jpg'),
-  const Tuple3(
-      'Neighborhood Street',
-      'Design a street for this idyllic neighborhood.',
-      'assets/examplescene3.jpg'),
+List<ScenarioDescription> scenarios = [
+  ScenarioDescription(
+      title: ScenarioTitles.cityStreet,
+      description: 'Create a design for a bustling city street.',
+      previewImagePath: 'assets/examplescene1.jpg'),
+  ScenarioDescription(
+      title: ScenarioTitles.suburbanStreet,
+      description: 'Design the perfect suburban street.',
+      previewImagePath: 'assets/examplescene2.jpg'),
+  ScenarioDescription(
+      title: ScenarioTitles.neighborhoodStreet,
+      description: 'Design a street for this idyllic neighborhood.',
+      previewImagePath: 'assets/examplescene3.jpg'),
 ];
 
 class Menu extends StatefulWidget {
@@ -73,11 +53,11 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     List<Widget> cardList = List.generate(
-        3,
+        scenarios.length,
         (i) => ScenarioCard(
-              title: scenarioText[i].item1,
-              text: scenarioText[i].item2,
-              imagePath: scenarioText[i].item3,
+              title: scenarios[i].title,
+              text: scenarios[i].description,
+              imagePath: scenarios[i].previewImagePath,
             ));
 
     Widget content = Container();
@@ -134,12 +114,12 @@ class ScenarioCard extends StatelessWidget {
   final String title;
   final String text;
   final String imagePath;
-  const ScenarioCard(
-      {Key? key,
-      required this.title,
-      required this.text,
-      required this.imagePath})
-      : super(key: key);
+  const ScenarioCard({
+    Key? key,
+    required this.title,
+    required this.text,
+    required this.imagePath,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -222,8 +202,7 @@ class ScenarioCard extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Scenario(
-                                      title: ScenarioTitles.cityStreet,
-                                      staticOptions: staticOptions,
+                                      title: title,
                                     )));
                       },
                       child: const Icon(Icons.arrow_forward_ios_rounded,

@@ -56,6 +56,14 @@ class Option {
     }
   }
 
+  void forceDisable() {
+    setLocked(false);
+    enabled = false;
+    for (OptionImage image in images) {
+      image.enabled = false;
+    }
+  }
+
   void enable() {
     if (!locked && !enabled) {
       enabled = true;
@@ -67,6 +75,14 @@ class Option {
       if (onEnable != null) {
         onEnable!();
       }
+    }
+  }
+
+  void forceEnable() {
+    setLocked(false);
+    enabled = true;
+    for (OptionImage image in images) {
+      image.enabled = true;
     }
   }
 
@@ -103,6 +119,14 @@ class Feature {
     selected = -1;
     for (Option option in options!) {
       option.disable();
+    }
+  }
+
+  void forceDisable() {
+    enabled = false;
+    selected = -1;
+    for (Option option in options!) {
+      option.forceDisable();
     }
   }
 
@@ -187,6 +211,13 @@ class LaneManager {
     currentLaneType = null;
     if (onDisable != null) {
       onDisable!();
+    }
+  }
+
+  void forceDisable() {
+    if (currentLaneType != null) {
+      currentLaneType!.forceDisable();
+      currentLaneType = null;
     }
   }
 
@@ -394,6 +425,13 @@ class ChoiceManager with ChangeNotifier {
     notifyListeners();
   }
 
+  void forceDisable() {
+    enabled = false;
+    for (Feature feature in features!) {
+      feature.forceDisable();
+    }
+  }
+
   void notify() {
     notifyListeners();
   }
@@ -489,6 +527,11 @@ class ImageLayerManager with ChangeNotifier {
     for (GlobalKey<_ImageLayerState> layer in keys) {
       layer.currentState!.updateLayer();
     }
+  }
+
+  void removeAll() {
+    layerImages = List.generate(numLayers, (i) => {});
+    updateAll();
   }
 
   factory ImageLayerManager() {
