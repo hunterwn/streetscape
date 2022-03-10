@@ -360,6 +360,13 @@ Map<String, LaneManager> cityStreetOptions = {
           ],
         ], 'assets/trees_near_R.png', 100, OptionTypes.extra.index),
       ]),
+      Feature([
+        Option([
+          [
+            OptionImage(layer: 7, imagePath: 'assets/bollard_R.png'),
+          ],
+        ], 'assets/bollard_preview.png', 100, OptionTypes.extra.index),
+      ])
     ], "Sidewalk", Sidewalk.onEnableR, Sidewalk.onDisableR),
   ], Lane5.onEnable, Lane5.onDisable),
   LaneNames.crosswalk: LaneManager([
