@@ -55,18 +55,16 @@ The majority of this code can be found in the choice_manager.dart file. The code
 Each scenario's various features and options are declared in the get_scenario_options.dart file. You will find the getScenarioOptions function which provides variables representing each scenario declared in the file, as well as the getStaticOptions which provides the options which cannot be interacted with by the player.
 ## Resources
 
-Due to their size, the files for asset generation have been placed in a the SD_assets.7z file which can be opened with 7zip or WinRAR. Inside you will find 3D models and files used to generate renders with various software listed above in the software section. The renders.7z file contains raw renders from Blender while the SD_exportedimages.7z file contains processed images.
+Due to their size, the files for asset generation have been placed in a the assets.zip file which can be opened with 7zip or WinRAR. Inside you will find 3D models and files used to generate renders with various software listed above in the software section. The renders.zip file contains raw renders from Blender while the exportedimages.zip file contains processed images. The compositing.zip file contains the .xcf and .psd file used for processing raw renders and viewing them in context.
 
 ## Asset Generation
 
 Assets are generated in Blender using the rendering function with the Cycles rendering engine. For a tutorial on how to render in Blender look [here](https://www.youtube.com/watch?v=ZTxBrjN1ugA). 
 
-When opening the render_scene.blend file, you will immediately see the Camera's POV at which renders are made. This camera represents the view of the player of the street and should never be moved. Pressing 0 on the numpad will reset your view to match the camera. From here 3D models can be toggled on and off to be visible on invisible in the project outline and rendered individually.
+When opening the render_scene.blend file, you will immediately see the Camera's POV at which renders are made. This camera represents the view of the player of the street and should never be moved. Pressing 0 on the numpad will reset your view to match the camera. From here 3D models can be toggled on and off to be visible or invisible in the project outline and rendered individually.
 
-Once you have made your renders, I have provided a composite.psd file which you can import your renders into to preview them and make small edits as necessary using Photoshop. If you do not have photoshop I have also provided the .xcf file which can be edited using GIMP, a free Photoshop alternative.
+Once you have made your renders, I have provided a composite.psd file which you can import your renders into to preview them and make small edits as necessary using Photoshop. If you do not have photoshop this file can also be edited using GIMP, a free Photoshop alternative.
 
 After you are satisfied with the images they will need to be added to the /assets folder in the repository before they can be obtained by filename in code.
 
 Sketchup was used as a source for various 3D architectural models. In SketchUp there is a feature called the 3D Warehouse which allows you to search and download 3D models. These can be exported as .dae files and imported to Blender with some effort. 
-
-
